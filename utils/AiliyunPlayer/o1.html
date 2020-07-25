@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="IE=edge" >
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+  <title>Aliplayer Functions</title>
+  <link rel="stylesheet" href="https://g.alicdn.com/de/prismplayer/2.8.8/skins/default/aliplayer-min.css" />
+  <script type="text/javascript" charset="utf-8" src="https://g.alicdn.com/de/prismplayer/2.8.8/aliplayer-min.js"></script>
+  <!-- 请下载之后使用 -->
+  <script type="text/javascript" charset="utf-8" src="aliplayercomponents-1.0.5.min.js"></script>
+</head>
+<body>
+<div id="player-con"></div>
+<script>
+    /* Custom events for skipping ads. These parameters are provided by the video ad component. */
+    var videoAdClose = function (videoAd) {
+        /* Register the pause event to pause the ad. */
+        videoAd.pauseVideoAd()
+        var result = confirm('确定开通会员关闭广告吗？')
+        if (result) {
+            /* Register the skip event to skip the ad. */
+            videoAd.closeVideoAd()
+        } else {
+            /* Register the play event to play the ad. */
+            videoAd.playVideoAd()
+        }
+    }
+    var player = new Aliplayer({
+        id: "player-con",
+        source: "https://outin-ac7b5a51cb3d11ea975800163e00b174.oss-cn-shanghai.aliyuncs.com/sv/5390528-173767530ee/5390528-173767530ee.mp4?Expires=1595606000&OSSAccessKeyId=LTAIxSaOfEzCnBOj&Signature=rCrOXAwEbWRlhoWstwr7tBXgoEI%3D",
+        width: "100%",
+        height: "500px",
+        autoplay: true,
+        isLive: false,
+        components: [{
+            name: 'VideoADComponent',
+            // type: AliPlayerComponent.VideoADComponent,
+            type: AliPlayerComponent.VideoADComponent,
+            /* The video ad component has these parameters: adVideoSource, adLink, adCloseFunction, and closeText
+             * adVideoSource {@String Required. The URL of the video ad. }
+             * adLink {@String Required. The link of the ad page.}
+             * adCloseFunction {@Function Optional. The click event handler for skipping the ad. The default action is skip ad.}
+             * closeText {@String Optional. The text of the skip ad button. The default is 'Skip Ad'.}
+             */
+            args: ['https://vdept.bdstatic.com/705231467748553353633966464c4c64/4563454a376b3736/9d0962de0491852615ab7152e9372cf6b3314574876fa744423dd2abb6224adb99d55977bc1fee40bf45e8d75f08c8d2.mp4?auth_key=1595609710-0-0-609060dac6ae6bb5691cf96d99fa6298', 'http://www.ccxam.top', videoAdClose, 'VIP关闭广告']
+        }]
+    }, function (player) {
+        console.log("The player is created");
+    });
+</script>
+</body>
+</html>
